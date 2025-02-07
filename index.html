@@ -295,16 +295,66 @@
 
         /* Responsividade */
         @media (max-width: 768px) {
+            header h1 {
+                font-size: 3rem;
+            }
+
+            header p {
+                font-size: 1.5rem;
+            }
+
+            .timeline-item h3 {
+                font-size: 1.5rem;
+            }
+
+            .timeline-item p {
+                font-size: 1rem;
+            }
+
+            .message-box h3 {
+                font-size: 1.5rem;
+            }
+
+            .message-box p {
+                font-size: 1rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
             .timeline-item {
                 width: 100%;
                 left: 0 !important;
-                text-align: center;
+                text-align: left;
+                margin-left: 40px;
             }
 
             .timeline-item.left::before,
             .timeline-item.right::before {
-                left: 50%;
-                transform: translateX(-50%);
+                left: -10px;
+                transform: translateX(0);
+            }
+
+            .timeline-item.right {
+                left: 0;
+            }
+
+            #loginForm {
+                width: 90%;
+                padding: 20px;
+            }
+
+            #loginForm h2 {
+                font-size: 2rem;
+            }
+
+            #loginForm input {
+                font-size: 0.9rem;
+            }
+
+            #loginForm button {
+                font-size: 1rem;
             }
         }
     </style>
