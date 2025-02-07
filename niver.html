@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linha do Tempo Moderna e Feminina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Página de Login */
+        #loginPage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff6b6b, #ff9a9e, #fad0c4);
+        }
+
+        #loginForm {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        #loginForm h2 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #loginForm input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            backdrop-filter: blur(5px);
+        }
+
+        #loginForm input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #loginForm button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #loginForm button:hover {
+            background: #ff4757;
+        }
+
+        /* Página da Linha do Tempo */
+        #timelinePage {
+            display: none;
+            padding: 40px 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 0;
+            margin-top: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 0 auto;
+            padding: 20px 0;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(180deg, #ff6b6b, #a18cd1, #ff6b6b);
+            transform: translateX(-50%);
+            z-index: 1;
+            animation: lineGlow 3s infinite alternate;
+        }
+
+        @keyframes lineGlow {
+            0% {
+                box-shadow: 0 0 10px #ff6b6b, 0 0 20px #ff6b6b;
+            }
+            100% {
+                box-shadow: 0 0 20px #a18cd1, 0 0 40px #a18cd1;
+            }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 50px 0;
+            width: 45%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item.left {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item.right {
+            left: 55%;
+            text-align: left;
+        }
+
+        .timeline-item h3 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-item p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #fff;
+        }
+
+        .timeline-item img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 2;
+            box-shadow: 0 0 10px #ff6b6b;
+        }
+
+        .timeline-item.left::before {
+            right: -30px;
+        }
+
+        .timeline-item.right::before {
+            left: -30px;
+        }
+
+        /* Overlay e Message Box */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .message-box h3 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-box p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #fff;
+        }
+
+        .message-box button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-box button:hover {
+            background: #ff4757;
+        }
+
+        /* Caixa de Presente */
+        .gift-box {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .gift-box img {
+            width: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box img:hover {
+            transform: scale(1.1);
+        }
+
+        .surprise {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: center;
+            }
+
+            .timeline-item.left::before,
+            .timeline-item.right::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loginPage">
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <h2>Feliz Aniversário Meu Amor</h2>
+            <input type="text" id="username" placeholder="Nome" required>
+            <input type="password" id="password" placeholder="A senha é a sua idade <3" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="timelinePage">
+        <header>
+            <h1>Happy Birthday</h1>
+            <p>Meu Amor</p>
+        </header>
+
+        <div class="timeline" id="timeline">
+            <!-- Timeline items will be dynamically generated here -->
+        </div>
+
+        <!-- Caixa de Presente -->
+        <div class="gift-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/3524/3524637.png" alt="Caixa de Presente" onclick="showSurprise()">
+            <div class="surprise" id="surprise">
+                Surpresa! Você é incrível e merece o mundo! 🎉💖
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="message-box" id="messageBox">
+            <h3 id="messageTitle"></h3>
+            <p id="messageContent"></p>
+            <button onclick="closeMessageBox()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const timelineData = [
+            { year: 2001, message: "Aqui você nasceu, o inicio de toda sua trajetória.", image: "./imagens/5.png" },
+            { year: 2002, message: "Seu primeiro aninho, você começou a dizer palavras e explorar ao máximo. Gostava muito de dormir!", image: "./imagens/01 ano.jpg" },
+            { year: 2003, message: "Aos 2 anos, já andava com passos pequenos e era muito curiosa. Dormir era o seu hobby favorito.", image: "./imagens/02 anos.png" },
+            { year: 2004, message: "Com 3 anos, você era muito energética, mas nada tirava seu amor por uma boa soneca.", image: "./imagens/3 anos.png" },
+            { year: 2005, message: "Com 4 anos, você falava mais e encantava todos com sua fofura. Ainda amava dormir!", image: "./imagens/4 anoss.png" },
+            { year: 2006, message: "5 aninhos, cheia de sorrisos e momentos engraçados. E claro, adorava suas sonecas.", image: "./imagens/5 anos.png" },
+            { year: 2007, message: "Com 6 anos, começou a explorar ainda mais na escola, mas nunca deixou de gostar de dormir bem!", image: "./imagens/6 anos.png" },
+            { year: 2008, message: "7 anos, cheia de energia para brincar e criar, mas sempre reservava tempo para descansar.", image: "./imagens/4.png" },
+            { year: 2009, message: "8 anos, sua criatividade e alegria enchiam o ambiente. Dormir era seu momento favorito do dia.", image: "./imagens/3.png" },
+            { year: 2010, message: "Com 9 anos, você impressionava todos com sua inteligência e carisma. Nunca perdia o costume de dormir bem.", image: "./imagens/2.png" },
+            { year: 2011, message: "Aos 10 anos, adorava descobrir coisas novas, com equilíbrio entre aventuras e sonecas.", image: "./imagens/1.png" },
+            { year: 2012, message: "11 anos e cheia de sonhos! Suas brincadeiras e vontade de aprender marcaram o ano.", image: "./imagens/12.jpeg" },
+            { year: 2013, message: "Com 12 anos, começou a se interessar por novas atividades e fazer grandes amizades.", image: "./imagens/13.jpeg" },
+            { year: 2014, message: "Aos 13 anos, a fase de mudanças trouxe novidades, e você sempre enfrentou tudo com coragem.", image: "./imagens/7.jpeg" },
+            { year: 2015, message: "14 anos, você estava cheia de energia e começou a construir memórias inesquecíveis.", image: "./imagens/15.jpeg" },
+            { year: 2016, message: "15 anos, um ano cheio de aventuras e muito crescimento pessoal.", image: "./imagens/2016.jpg" },
+            { year: 2017, message: "16 anos, o ano em que eu, Alex, conheci você. Desde então, minha vida mudou para melhor!", image: "./imagens/2017.jpg" },
+            { year: 2018, message: "17 anos, você se destacava com sua determinação e alegria. Seguimos construindo memórias juntos.", image: "./imagens/2018.jpg" },
+            { year: 2019, message: "18 anos, um marco na sua vida! Você brilhava em todos os desafios que enfrentava.", image: "./imagens/2019.jpg" },
+            { year: 2020, message: "19 anos, cheia de ideias para o futuro. Sua determinação me orgulha cada dia mais.", image: "./imagens/2020.jpg" },
+            { year: 2021, message: "Aos 20 anos, você continuou mostrando sua força e dedicação em tudo que fazia.", image: "./imagens/2021.jpeg" },
+            { year: 2022, message: "21 anos, um ano cheio de conquistas. Seu crescimento foi lindo de acompanhar!", image: "./imagens/2022.jpeg" },
+            { year: 2023, message: "22 anos, a felicidade tomou conta das nossas vidas. ", image: "./imagens/2023.jpeg" },
+            { year: 2024, message: "23 anos, na virada do ano de 2023 para 2024, noivamos! Hoje somos noivos e continuamos juntos, mais unidos do que nunca.", image: "./imagens/2024.jpeg" },
+            { year: 2025, message: "Aos 24 anos, você continua sendo a pessoa incrível que sempre foi. O futuro nos espera e estou ao seu lado! Amo muito você que Deus sempre te abençõe.", image: "./imagens/2025.jpeg" }
+        ];
+
+        const timelineContainer = document.getElementById('timeline');
+        const messageBox = document.getElementById('messageBox');
+        const overlay = document.getElementById('overlay');
+        const messageTitle = document.getElementById('messageTitle');
+        const messageContent = document.getElementById('messageContent');
+        const loginPage = document.getElementById('loginPage');
+        const timelinePage = document.getElementById('timelinePage');
+        const surprise = document.getElementById('surprise');
+
+        const username = "jaqueline";
+        const password = "24";
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const enteredUsername = document.getElementById('username').value;
+            const enteredPassword = document.getElementById('password').value;
+
+            if (enteredUsername === username && enteredPassword === password) {
+                loginPage.style.display = 'none';
+                timelinePage.style.display = 'block';
+                initializeTimeline();
+            } else {
+                alert('Invalid login credentials!');
+            }
+        }
+
+        function initializeTimeline() {
+            timelineData.forEach((item, index) => {
+                const side = index % 2 === 0 ? 'left' : 'right';
+
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item ${side}`;
+                timelineItem.style.backgroundImage = `url('${item.image}')`;
+
+                timelineItem.innerHTML = `
+                    <h3>${item.year}</h3>
+                    <img src="${item.image}" alt="Evento ${item.year}">
+                    <p>${item.message}</p>
+                `;
+
+                timelineItem.addEventListener('click', () => {
+                    showMessageBox(item.year, item.message);
+                });
+
+                timelineContainer.appendChild(timelineItem);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        function showMessageBox(title, content) {
+            messageTitle.textContent = title;
+            messageContent.textContent = content;
+            messageBox.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function closeMessageBox() {
+            messageBox.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        function showSurprise() {
+            surprise.style.display = 'block';
+        }
+        
+    </script>
+</body>
+</html>
